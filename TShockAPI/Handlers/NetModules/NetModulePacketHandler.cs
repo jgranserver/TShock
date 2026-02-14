@@ -20,7 +20,8 @@ namespace TShockAPI.Handlers.NetModules
 			{ NetModuleType.TeleportPylon,                typeof(PylonHandler)            },
 			{ NetModuleType.Liquid,                       typeof(LiquidHandler)           },
 			{ NetModuleType.Bestiary,                     typeof(BestiaryHandler)         },
-			{ NetModuleType.Ambience,                     typeof(AmbienceHandler)         }
+			{ NetModuleType.Ambience,                     typeof(AmbienceHandler)         },
+			{ NetModuleType.CraftingRequests,             typeof(CraftingRequestHandler)  }
 		};
 
 		/// <summary>
@@ -31,6 +32,10 @@ namespace TShockAPI.Handlers.NetModules
 		/// <param name="args"></param>
 		public void OnReceive(object sender, ReadNetModuleEventArgs args)
 		{
+			TShock.Log.ConsoleDebug(GetString(
+				"NetModulePacketHandler / OnReceive moduleType={0} ({1}) from {2}",
+				(int)args.ModuleType, args.ModuleType, args.Player?.Name ?? "unknown"));
+
 			INetModuleHandler handler;
 
 			if (NetModulesToHandlersMap.ContainsKey(args.ModuleType))
